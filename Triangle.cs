@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace ооп_лаба_6
 {
@@ -14,6 +15,7 @@ namespace ооп_лаба_6
         private int y;
         private int r; //радиус
         private bool select;
+        private int color;
 
         public Triangle() { }
 
@@ -23,17 +25,56 @@ namespace ооп_лаба_6
             this.y = _y;
             this.r = 20;
             this.select = false;
+            this.color = 0;
         }
 
         override public void draw(PaintEventArgs e)
         {
-            Pen pen;
+            Pen pen; pen = new Pen(Color.Black, 1);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            //if (select == true)
+            //{
+            //    //Point[] vertices2 = new Point[3];
+            //    //vertices2[0] = new Point((int)(x + 1.3 * r), (int)(y - 1.3 * r));
+            //    //vertices2[1] = new Point((int)(x + 1.3 * r), (int)(y + 1.3 * r));
+            //    //vertices2[2] = new Point((int)(x - 1.3 * r), (int)(y + 1.3 * r));
+
+            //    ////pen = new Pen(Color.Black, 1);
+            //    //e.Graphics.DrawPolygon(pen, vertices2);
+
+            //    pen = new Pen(Color.Black, 2); //цвет и толщина кисти
+            //}
+            //else
+            //    pen = new Pen(Color.Black, 1);
+
             if (select == true)
-                pen = new Pen(Color.Green, 2); //цвет и толщина кисти
+            {
+                if (color == 0) pen = new Pen(Color.Black, 2); //цвет и толщина кисти
+                if (color == 1) pen = new Pen(Color.Red, 2);
+                if (color == 2) pen = new Pen(Color.Orange, 2);
+                if (color == 3) pen = new Pen(Color.Yellow, 2);
+                if (color == 4) pen = new Pen(Color.Green, 2);
+                if (color == 5) pen = new Pen(Color.LightBlue, 2);
+                if (color == 6) pen = new Pen(Color.Blue, 2);
+                if (color == 7) pen = new Pen(Color.Purple, 2);
+            }
             else
-                pen = new Pen(Color.Black, 1);
-            //-r чтобы центр круга оказывался в месте клика, тк эллипс рисуется из верхнего левого угла
-            e.Graphics.DrawEllipse(pen, x - r, y - r, 2 * r, 2 * r);
+            {
+                if (color == 0) pen = new Pen(Color.Black, 1); //цвет и толщина кисти
+                if (color == 1) pen = new Pen(Color.Red, 1);
+                if (color == 2) pen = new Pen(Color.Orange, 1);
+                if (color == 3) pen = new Pen(Color.Yellow, 1);
+                if (color == 4) pen = new Pen(Color.Green, 1);
+                if (color == 5) pen = new Pen(Color.LightBlue, 1);
+                if (color == 6) pen = new Pen(Color.Blue, 1);
+                if (color == 7) pen = new Pen(Color.Purple, 1);
+            }
+
+            Point[] vertices1 = new Point[3];
+            vertices1[0] = new Point(x + r, y - r);
+            vertices1[1] = new Point(x + r, y + r);
+            vertices1[2] = new Point(x - r, y + r);
+            e.Graphics.DrawPolygon(pen,vertices1);
         }
 
         override public bool ifselected(int _x, int _y)
@@ -61,6 +102,11 @@ namespace ооп_лаба_6
         override public int get_y()
         {
             return y;
+        }
+
+        override public void set_color(int _color)
+        {
+            this.color = _color;
         }
     }
 }

@@ -33,13 +33,23 @@ namespace ооп_лаба_6
 			return _size;
 		}
 
-		public void addObject(int index, Circle b)
+		public void addCircle(int index, Circle c)
 		{
-			//_objects.Add(new BaseObject(b));
-			_objects.Add(b);
+			_objects.Add(c);
 			_count = _count + 1;
 			_size = _size + 1;
-			//setObject(index, b);
+		}
+		public void addSquare(int index, Square s)
+		{
+			_objects.Add(s);
+			_count = _count + 1;
+			_size = _size + 1;
+		}
+		public void addTriangle(int index, Triangle t)
+		{
+			_objects.Add(t);
+			_count = _count + 1;
+			_size = _size + 1;
 		}
 
 		public void change_array()
@@ -76,7 +86,6 @@ namespace ооп_лаба_6
 
 		public BaseObject get_current_obj(int current)
 		{
-			//return _objects[current]._circle;
 			return _objects[current];
 		}
 

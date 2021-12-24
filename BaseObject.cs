@@ -15,14 +15,10 @@ namespace ооп_лаба_6
         ~BaseObject()
         {
         }
-        public virtual void draw(PaintEventArgs e)
-        {
+        public virtual void draw(PaintEventArgs e) { }
 
-        }
-        public virtual bool ifselected(int _x, int _y)
-        {
-            return false;
-        }
+        public virtual bool ifselected(int _x, int _y) { return false; }
+
         public virtual void set_select(bool select) { }
 
         public virtual bool get_select() { return false; }
@@ -30,5 +26,7 @@ namespace ооп_лаба_6
         public virtual int get_x() { return 0; }
 
         public virtual int get_y() { return 0; }
+
+        public virtual void set_color(int _color) { }
     }
 }
