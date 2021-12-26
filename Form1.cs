@@ -22,10 +22,10 @@ namespace ооп_лаба_6
         Triangle triangle = new Triangle();
         Storage storage = new Storage();
         int index = -1;
-        bool ctrl = false;
-        bool chosen_circle = true; bool chosen_square = false; bool chosen_triangle = false;
-
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        //bool ctrl = false;
+        bool chosen_circle = true; bool chosen_square = false; bool chosen_triangle = false;      
+        
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -35,18 +35,18 @@ namespace ооп_лаба_6
                     if (storage.get_current_obj(i).ifselected(e.X, e.Y) == true) //если на объект нажали
                     {
                         new_figure = false;
-                        if (ctrl == true)
-                            storage.get_current_obj(i).set_select(true);
-                        else
+                        //if (ctrl == true)
+                        //    storage.get_current_obj(i).set_select(true);
+                        //else
+                        //{
+                        for (int j = 0; j < storage.getCount(); j++)
                         {
-                            for (int j = 0; j < storage.getCount(); j++)
-                            {
-                                if (storage.get_current_obj(j).get_select() == true) //снимаем выделение у всех объектов
-                                    storage.get_current_obj(j).set_select(false);
+                            if (storage.get_current_obj(j).get_select() == true) //снимаем выделение у всех объектов
+                                storage.get_current_obj(j).set_select(false);
 
-                            }
-                            storage.get_current_obj(i).set_select(true); //ставим выделение у объекта на который нажали
                         }
+                        storage.get_current_obj(i).set_select(true); //ставим выделение у объекта на который нажали
+                        //}
                     }
                 }
 
@@ -77,7 +77,68 @@ namespace ооп_лаба_6
             }
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
+        //private void Form1_MouseDown(object sender, MouseEventArgs e)
+        //{
+        //    if (e.Button == MouseButtons.Left)
+        //    {
+        //        bool new_figure = true;
+        //        for (int i = 0; i < storage.getCount(); i++) //для каждого объекта массива
+        //        {
+        //            if (storage.get_current_obj(i).ifselected(e.X, e.Y) == true) //если на объект нажали
+        //            {
+        //                new_figure = false;
+        //                //if (ctrl == true)
+        //                //    storage.get_current_obj(i).set_select(true);
+        //                //else
+        //                //{
+        //                for (int j = 0; j < storage.getCount(); j++)
+        //                {
+        //                    if (storage.get_current_obj(j).get_select() == true) //снимаем выделение у всех объектов
+        //                        storage.get_current_obj(j).set_select(false);
+
+        //                }
+        //                storage.get_current_obj(i).set_select(true); //ставим выделение у объекта на который нажали
+        //                //}
+        //            }
+        //        }
+
+        //        if (new_figure == true)
+        //        {
+        //            for (int i = 0; i < storage.getCount(); i++) storage.get_current_obj(i).set_select(false); //снимаем выделение у всех объектов
+        //            index = index + 1;
+
+        //            if (chosen_circle == true)
+        //            {
+        //                circle = new Circle(e.X, e.Y);
+        //                storage.addCircle(index, circle);
+        //            }
+        //            else if (chosen_square == true)
+        //            {
+        //                square = new Square(e.X, e.Y);
+        //                storage.addSquare(index, square);
+        //            }
+        //            else if (chosen_triangle == true)
+        //            {
+        //                triangle = new Triangle(e.X, e.Y);
+        //                storage.addTriangle(index, triangle);
+        //            }
+
+        //            storage.get_current_obj(index).set_select(true);
+        //        }
+        //        Refresh();
+        //    }
+        //}
+
+        //private void Form1_Paint(object sender, PaintEventArgs e)
+        //{
+        //    if (storage.getCount() != 0)
+        //    {
+        //        for (int i = 0; i < storage.getCount(); i++) storage.get_current_obj(i).draw(e);
+        //        storage.set_current_index(index);
+        //    }
+        //}
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
             if (storage.getCount() != 0)
             {
@@ -88,7 +149,7 @@ namespace ооп_лаба_6
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey) ctrl = true;
+            //if (e.KeyCode == Keys.ControlKey) ctrl = true;
             if (e.KeyCode == Keys.Delete)
             {
                 for (int i = 0; i < storage.getCount(); i++)
@@ -103,13 +164,32 @@ namespace ооп_лаба_6
 
                 Refresh();
             }
+            if (e.KeyCode == Keys.Oemplus || e.KeyCode == Keys.OemMinus)
+            {
+                //Form1 f = (Form1)sender; ToolStrip ts = new ToolStrip();
+                for (int i = 0; i < storage.getCount(); i++)
+                    if (storage.get_current_obj(i).get_select() == true)
+                        storage.get_current_obj(i).change_size(e, panel1);
+                Refresh();
+            }
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
+            {
+                //Form1 f = (Form1)sender; 
+                //Form1 f = new Form1(); 
+                //ToolStrip ts = new ToolStrip();
+                for (int i = 0; i < storage.getCount(); i++)
+                    if (storage.get_current_obj(i).get_select() == true)
+                        storage.get_current_obj(i).move(e, panel1);
+                Refresh();
+            }
         }
 
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.ControlKey)
-                ctrl = false;
-        }
+        //private void Form1_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.ControlKey)
+        //        ctrl = false;
+        //}
+
 
         private void tsbtn_Circle_Click(object sender, EventArgs e)
         {
@@ -132,6 +212,8 @@ namespace ооп_лаба_6
             chosen_triangle = true;
         }
 
+
+
         private void change_color(int color)
         {
             if (storage.getCount() != 0)
@@ -142,7 +224,7 @@ namespace ооп_лаба_6
                 storage.set_current_index(index);
                 Refresh();
             }
-        }
+        } //меняем цвет выделенных фигур
 
         private void redToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -183,5 +265,9 @@ namespace ооп_лаба_6
         {
             change_color(0);
         }
+
+
+
+
     }
 }
